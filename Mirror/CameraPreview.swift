@@ -3,13 +3,17 @@ import SwiftUI
 import UIKit
 
 struct CameraPreview: UIViewRepresentable {
+    let zoom: CGFloat
+
     func makeUIView(context: Context) -> CameraPreviewView {
         let view = CameraPreviewView()
         view.start()
         return view
     }
 
-    func updateUIView(_ uiView: CameraPreviewView, context: Context) {}
+    func updateUIView(_ uiView: CameraPreviewView, context: Context) {
+        uiView.setZoom(zoom)
+    }
 }
 
 final class CameraPreviewView: UIView {
@@ -23,6 +27,8 @@ final class CameraPreviewView: UIView {
 
     private let session = AVCaptureSession()
     private let sessionQueue = DispatchQueue(label: "mirror.camera.session")
+    private var device: AVCaptureDevice?
+    private let maximumZoom: CGFloat = 5.0
 
     func start() {
         previewLayer.videoGravity = .resizeAspectFill
@@ -43,6 +49,21 @@ final class CameraPreviewView: UIView {
         }
     }
 
+    func setZoom(_ factor: CGFloat) {
+        sessionQueue.async { [weak self] in
+            guard let self, let device = self.device else { return }
+            let maximumSupported = min(device.activeFormat.videoMaxZoomFactor, self.maximumZoom)
+            let clamped = max(1.0, min(factor, maximumSupported))
+            do {
+                try device.lockForConfiguration()
+                device.videoZoomFactor = clamped
+                device.unlockForConfiguration()
+            } catch {
+                return
+            }
+        }
+    }
+
     private func configureAndStart() {
         session.beginConfiguration()
         session.sessionPreset = .high
@@ -54,8 +75,8 @@ final class CameraPreviewView: UIView {
         )
 
         guard
-            let device = discovery.devices.first,
-            let input = try? AVCaptureDeviceInput(device: device),
+            let frontCamera = discovery.devices.first,
+            let input = try? AVCaptureDeviceInput(device: frontCamera),
             session.canAddInput(input)
         else {
             session.commitConfiguration()
@@ -64,6 +85,7 @@ final class CameraPreviewView: UIView {
 
         session.addInput(input)
         session.commitConfiguration()
+        device = frontCamera
 
         DispatchQueue.main.async { [weak self] in
             guard let connection = self?.previewLayer.connection else { return }

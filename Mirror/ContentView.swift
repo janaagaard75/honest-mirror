@@ -4,11 +4,13 @@ import UIKit
 struct ContentView: View {
     @State private var e = false
     @State private var brightnessBeforeFlashlight: CGFloat = UIScreen.main.brightness
+    @State private var zoom: CGFloat = 1.0
+    @State private var zoomAtGestureStart: CGFloat = 1.0
 
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                CameraPreview()
+                CameraPreview(zoom: zoom)
                     .allowsHitTesting(false)
                 VStack(spacing: 0) {
                     Color.white
@@ -31,6 +33,15 @@ struct ContentView: View {
                 e.toggle()
             }
         }
+        .simultaneousGesture(
+            MagnifyGesture()
+                .onChanged { value in
+                    zoom = max(1.0, zoomAtGestureStart * value.magnification)
+                }
+                .onEnded { _ in
+                    zoomAtGestureStart = zoom
+                }
+        )
         .onChange(of: e) { _, turnedOn in
             if turnedOn {
                 brightnessBeforeFlashlight = UIScreen.main.brightness

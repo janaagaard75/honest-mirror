@@ -2,6 +2,8 @@ import SwiftUI
 import UIKit
 
 struct ContentView: View {
+    let buttonSize = 64.0
+  
     @State private var floodLightOn = false
     @State private var brightnessBeforeFlashlight: CGFloat = 0.5
     @State private var zoom: CGFloat = 1.0
@@ -39,12 +41,12 @@ struct ContentView: View {
                         Image(systemName: "bolt.fill")
                             .font(.system(size: 28, weight: .semibold))
                             .foregroundStyle(Color.white)
-                            .frame(width: 64, height: 64)
+                            .frame(width: buttonSize, height: buttonSize)
                             .contentShape(Circle())
                     }
                     .buttonStyle(.plain)
                     .glassEffect(floodLightOn ? .clear.tint(Color(red: 0.5, green: 0.5, blue: 0.6)) : .clear, in: Circle())
-                    .padding(.bottom, geometry.size.height / 12 - 32 + 2)
+                    .padding(.bottom, geometry.size.height / 12 - buttonSize / 2 + 2)
                 }
             }
         }

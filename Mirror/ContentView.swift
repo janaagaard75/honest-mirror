@@ -39,16 +39,11 @@ struct ContentView: View {
                         Image(systemName: "bolt.fill")
                             .font(.system(size: 28, weight: .semibold))
                             .foregroundStyle(Color.white)
-                            .shadow(color: e ? .black : .clear, radius: 0, x: 1, y: 0)
-                            .shadow(color: e ? .black : .clear, radius: 0, x: -1, y: 0)
-                            .shadow(color: e ? .black : .clear, radius: 0, x: 0, y: 1)
-                            .shadow(color: e ? .black : .clear, radius: 0, x: 0, y: -1)
                             .frame(width: 64, height: 64)
                             .contentShape(Circle())
                     }
                     .buttonStyle(.plain)
-                    .glassEffect(.clear, in: Circle())
-                    .overlay(Circle().stroke(e ? Color.black : Color.clear, lineWidth: 1.5))
+                    .glassEffect(e ? .clear.tint(Color(red: 0.5, green: 0.5, blue: 0.6)) : .clear, in: Circle())
                     .padding(.bottom, geometry.size.height / 12 - 32 + 20)
                 }
             }

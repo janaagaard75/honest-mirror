@@ -3,9 +3,16 @@ import UIKit
 
 struct ContentView: View {
     @State private var e = false
-    @State private var brightnessBeforeFlashlight: CGFloat = UIScreen.main.brightness
+    @State private var brightnessBeforeFlashlight: CGFloat = 0.5
     @State private var zoom: CGFloat = 1.0
     @State private var zoomAtGestureStart: CGFloat = 1.0
+
+    private var currentScreen: UIScreen? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first(where: { $0.activationState == .foregroundActive })?
+            .screen
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -60,11 +67,12 @@ struct ContentView: View {
                 }
         )
         .onChange(of: e) { _, turnedOn in
+            guard let screen = currentScreen else { return }
             if turnedOn {
-                brightnessBeforeFlashlight = UIScreen.main.brightness
-                UIScreen.main.brightness = 1.0
+                brightnessBeforeFlashlight = screen.brightness
+                screen.brightness = 1.0
             } else {
-                UIScreen.main.brightness = brightnessBeforeFlashlight
+                screen.brightness = brightnessBeforeFlashlight
             }
         }
     }

@@ -7,7 +7,7 @@ Mirror is a no-nonsense app that turns your iPhone or iPad into a full-screen mi
 
 ## Support
 
-Have a question or found a bug? Open an issue on [GitHub](https://github.com/janaagaard75/mirror/issues).
+Have a question or found a bug? [Open an issue on GitHub](https://github.com/janaagaard75/mirror/issues) or email [jan@janaagaard.com](mailto:jan@janaagaard.com).
 
 ## Privacy
 

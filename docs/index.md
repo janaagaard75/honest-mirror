@@ -1,16 +1,9 @@
 ---
 layout: page
-title: Mirror
+title: Home
 ---
 
-Mirror is a no-nonsense app that turns your iPhone or iPad into a full-screen mirror using the front camera.
-
-## Gestures
-
-| Gesture | Action             |
-| ------- | ------------------ |
-| Tap     | Toggle fill light. |
-| Pinch   | Zoom in or out.    |
+Mirror is a no-nonsense app that turns your iPhone or iPad into a full-screen mirror using the front camera. Pinch to zoom in or out, tap the flash button to toggle the fill light, and enjoy a clear reflection in any lighting condition.
 
 ## Support
 
@@ -19,7 +12,3 @@ Have a question or found a bug? Open an issue on [GitHub](https://github.com/jan
 ## Privacy
 
 Mirror does not collect, store, or transmit any data. See the full [privacy policy](privacy).
-
----
-
-© 2026 Jan Aagaard

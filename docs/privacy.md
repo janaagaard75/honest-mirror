@@ -23,8 +23,4 @@ None.
 
 ## Contact
 
-Questions? Open an issue on [GitHub](https://github.com/janaagaard75/mirror/issues).
-
----
-
-© 2026 Jan Aagaard
+Questions? Open an issue on [GitHub](https://github.com/janaagaard75/mirror/issues) or email [jan@janaagaard.com](mailto:jan@janaagaard.com).
